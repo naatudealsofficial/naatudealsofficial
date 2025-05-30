@@ -6,6 +6,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminRegisterForm from "./components/AdminRegisterForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminClientManagement from "./pages/AdminClientManagement";
+import CategoryPage from './components/CategoryPage';
 
 function App() {
   // const role = localStorage.getItem("role");
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/clients" element={<AdminClientManagement />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />} />
         <Route path="/register" element={<AdminRegisterForm />} />
         {/* Protect the admin route */}
         <Route

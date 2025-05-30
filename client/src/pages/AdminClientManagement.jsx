@@ -10,26 +10,26 @@ function AdminClientManagement() {
     const config = {
       headers: { Authorization: localStorage.getItem("token") },
     };
-    const res = await axios.get("http://localhost:5000/api/admin/clients", config);
+    const res = await axios.get("https://naatudealsofficialsite.onrender.com/api/admin/clients", config);
     setClients(res.data);
   };
 
   const handleStatusToggle = async (id) => {
     const config = { headers: { Authorization: localStorage.getItem("token") } };
-    await axios.patch(`http://localhost:5000/api/admin/clients/${id}/toggle`, {}, config);
+    await axios.patch(`https://naatudealsofficialsite.onrender.com/api/admin/clients/${id}/toggle`, {}, config);
     fetchClients();
   };
 
   const handleDelete = async (id) => {
     const config = { headers: { Authorization: localStorage.getItem("token") } };
-    await axios.delete(`http://localhost:5000/api/admin/clients/${id}`, config);
+    await axios.delete(`https://naatudealsofficialsite.onrender.com/api/admin/clients/${id}`, config);
     fetchClients();
   };
 
   const handleAddClient = async (e) => {
     e.preventDefault();
     const config = { headers: { Authorization: localStorage.getItem("token") } };
-    await axios.post("http://localhost:5000/api/admin/clients", newClient, config);
+    await axios.post("https://naatudealsofficialsite.onrender.com/api/admin/clients", newClient, config);
     setNewClient({ name: "", email: "", password: "" });
     fetchClients();
   };

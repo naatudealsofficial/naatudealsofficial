@@ -11,7 +11,7 @@ function ClientDashboard() {
     const config = {
       headers: { Authorization: localStorage.getItem("token") },
     };
-    const res = await axios.get("http://localhost:5000/api/products/my", config);
+    const res = await axios.get("https://naatudealsofficialsite.onrender.com/api/products/my", config);
     setProducts(res.data);
   };
 
@@ -19,7 +19,7 @@ function ClientDashboard() {
     const config = {
       headers: { Authorization: localStorage.getItem("token") },
     };
-    await axios.delete(`http://localhost:5000/api/products/${id}`, config);
+    await axios.delete(`https://naatudealsofficialsite.onrender.com/api/products/${id}`, config);
     fetchMyProducts();
   };
 
