@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu } from "lucide-react"; // only the Menu icon now
+import { Link } from 'react-router-dom';
 
 function HomeHeader() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -46,12 +47,12 @@ function HomeHeader() {
             ✕
           </button>
           <div className="mt-6">
-            <a
-              href="/login"
+            <Link
+              to="/adminLogin"
               className="block bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-700 transition"
             >
               Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>
