@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/clients" element={<AdminClientManagement />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/adminLogin" element={<Login />} />
         <Route path="/category/:categoryName" element={<CategoryPage />} />
         <Route path="/register" element={<AdminRegisterForm />} />
         {/* Protect the admin route */}
