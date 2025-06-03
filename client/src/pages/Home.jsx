@@ -6,22 +6,26 @@ import HomeHeader from "../components/HomeHeader";
 import logo3 from '../assests/logo3.png';
 
 // Import icons
-import { MdDevices } from "react-icons/md";
-import { FaTshirt, FaBook } from "react-icons/fa";
-import { GiCook, GiLipstick, GiWeightLiftingUp, GiToyMallet, GiShoppingCart } from "react-icons/gi";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { GiHouse, GiCook, GiLipstick, GiWeightLiftingUp, GiToyMallet } from 'react-icons/gi';
+import { MdDevices } from 'react-icons/md';
+import { FaTshirt } from 'react-icons/fa';
+import { BiDotsHorizontalRounded } from 'react-icons/bi';
+
+
 
 const categories = [
   { name: "Electronics", icon: MdDevices },
   { name: "Fashion", icon: FaTshirt },
-  { name: "Books", icon: FaBook },
-  { name: "Home & Kitchen", icon: GiCook },
+  { name: "Home", icon: GiHouse },
+  { name: "Kitchen", icon: GiCook },
   { name: "Beauty", icon: GiLipstick },
   { name: "Fitness", icon: GiWeightLiftingUp },
   { name: "Toys", icon: GiToyMallet },
-  { name: "Grocery", icon: GiShoppingCart },
+  // { name: "Grocery", icon: GiShoppingCart },
   { name: "Others", icon: BiDotsHorizontalRounded },
 ];
+
+
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -68,24 +72,8 @@ function Home() {
           </div>
         </div>
 
-        {/* Circular Categories */}
-        <div className="w-full max-w-6xl mb-6 flex flex-wrap justify-center gap-6">
-          {[...categories].reverse().map(({ name, icon: Icon }) => (
-            <button
-              key={name}
-              onClick={() => handleCategoryClick(name)}
-              className="flex flex-col items-center justify-center cursor-pointer focus:outline-none"
-            >
-              <div className="w-20 h-20 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition">
-                <Icon size={25} />
-              </div>
-              <span className="mt-2 text-sm font-medium text-gray-900">{name}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Search Bar */}
-        <div className="sticky top-0 z-50 w-full max-w-md bg-gray-100 p-3 rounded shadow mb-6">
+         {/* Search Bar */}
+         <div className="sticky top-0 z-50 w-full max-w-md bg-gray-100 p-3 rounded shadow mb-6">
           <input
             type="text"
             placeholder="Search products..."
@@ -95,9 +83,27 @@ function Home() {
           />
         </div>
 
+        {/* Circular Categories */}
+        <div className="w-full max-w-6xl mb-6 flex flex-wrap justify-center gap-6">
+          {categories.map(({ name, icon: Icon }) => (
+            <button
+              key={name}
+              onClick={() => handleCategoryClick(name)}
+              className="flex flex-col items-center justify-center cursor-pointer focus:outline-none"
+            >
+              <div className="w-[40px] h-[40px] rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition">
+                <Icon size={20} />
+              </div>
+              <span className="mt-2 text-sm text-gray-900">{name}</span>
+            </button>
+          ))}
+        </div>
+
+       
+
         {/* Products Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full max-w-6xl">
-          {filtered.map((product) => (
+          {[...filtered].reverse().map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
