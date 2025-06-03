@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ProductAdd from "../components/ProductAdd";
 import ProductForm from "../components/ProductForm";
@@ -7,6 +8,7 @@ function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const navigate = useNavigate();
 
   const fetchProducts = async () => {
     try {
@@ -52,14 +54,14 @@ function AdminDashboard() {
         </button>
 
         <button
-          className="bg-red-600 text-white px-5 py-2 rounded hover:bg-red-700"
-          onClick={() => {
-            localStorage.removeItem("token");
-            window.location.href = "/adminLogin";
-          }}
-        >
-          Logout
-        </button>
+        className="bg-red-600 text-white px-5 py-2 rounded hover:bg-red-700"
+        onClick={() => {
+          localStorage.removeItem("token");
+          navigate("/adminLogin"); // redirect after logout
+        }}
+      >
+        Logout
+      </button>
       </div>
 
       {/* Add Product Form */}
