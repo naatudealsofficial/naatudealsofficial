@@ -3,14 +3,13 @@ import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
 import HomeHeader from "../components/HomeHeader";
-import logo3 from '../assests/logo3.png'
+import logo3 from '../assests/logo3.png';
 
-// Import icons from react-icons (choose appropriate ones)
-import { MdDevices } from "react-icons/md";           
-import { FaTshirt, FaBook } from "react-icons/fa";    
-import { GiCook, GiLipstick, GiWeightLiftingUp, GiToyMallet, GiShoppingCart } from "react-icons/gi"; 
+// Import icons
+import { MdDevices } from "react-icons/md";
+import { FaTshirt, FaBook } from "react-icons/fa";
+import { GiCook, GiLipstick, GiWeightLiftingUp, GiToyMallet, GiShoppingCart } from "react-icons/gi";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
-
 
 const categories = [
   { name: "Electronics", icon: MdDevices },
@@ -24,7 +23,6 @@ const categories = [
   { name: "Others", icon: BiDotsHorizontalRounded },
 ];
 
-
 function Home() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
@@ -32,8 +30,8 @@ function Home() {
 
   useEffect(() => {
     axios.get("https://naatudealsofficialsite.onrender.com/api/products").then((res) => {
-      setProducts(res.data);
-
+      const sorted = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setProducts(sorted);
     });
   }, []);
 
@@ -50,15 +48,15 @@ function Home() {
       <HomeHeader />
 
       <div className="flex flex-col items-center">
-        <div className='logo-div mb-6'>
-          <img src={logo3} alt='logo' className='mx-auto w-1/2 mt-5' />
-          <div className='header-text text-center mt-0'>
-            {/* <h1 className="text-3xl font-bold">Naatu Deals</h1> */}
+        {/* Logo and Telegram Link */}
+        <div className="logo-div mb-6">
+          <img src={logo3} alt="logo" className="mx-auto w-1/2 mt-5" />
+          <div className="header-text text-center mt-0">
             <h4>💥Join Our Telegram Channel💥</h4>
             <h4>👇🏻👇🏻👇🏻</h4>
             <button
-              className='telegram-link inline-flex items-center gap-2 px-4 py-2 mt-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition'
-              onClick={() => window.open('https://t.me/NaatuDeals', '_blank')}
+              className="telegram-link inline-flex items-center gap-2 px-4 py-2 mt-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+              onClick={() => window.open("https://t.me/NaatuDeals", "_blank")}
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/1200px-Telegram_logo.svg.png"
@@ -70,9 +68,9 @@ function Home() {
           </div>
         </div>
 
-        {/* Circular categories */}
+        {/* Circular Categories */}
         <div className="w-full max-w-6xl mb-6 flex flex-wrap justify-center gap-6">
-          {categories.map(({ name, icon: Icon }) => (
+          {[...categories].reverse().map(({ name, icon: Icon }) => (
             <button
               key={name}
               onClick={() => handleCategoryClick(name)}
@@ -86,7 +84,7 @@ function Home() {
           ))}
         </div>
 
-        {/* Sticky search */}
+        {/* Search Bar */}
         <div className="sticky top-0 z-50 w-full max-w-md bg-gray-100 p-3 rounded shadow mb-6">
           <input
             type="text"
@@ -98,18 +96,15 @@ function Home() {
         </div>
 
         {/* Products Grid */}
-        {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
-          {[...filtered]
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by latest
-            .map((product) => (
-              <div
-                key={product._id}
-                className="transform transition duration-300 hover:scale-105 hover:shadow-xl rounded"
-              >
-                <ProductCard product={product} />
-              </div>
-            ))}
+          {filtered.map((product) => (
+            <div
+              key={product._id}
+              className="transform transition duration-300 hover:scale-105 hover:shadow-xl rounded"
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
