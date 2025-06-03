@@ -96,16 +96,12 @@ function Home() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full max-w-6xl">
           {filtered.map((product) => (
-            <div
-              key={product._id}
-              className="transform transition duration-300 hover:scale-105 hover:shadow-xl rounded"
-            >
-              <ProductCard product={product} />
-            </div>
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
+
       </div>
     </div>
   );
