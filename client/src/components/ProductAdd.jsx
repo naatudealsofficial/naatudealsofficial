@@ -88,7 +88,8 @@ function ProductAdd({ onSave, onCancel }) {
         <option value="Electronics">Electronics</option>
         <option value="Fashion">Fashion</option>
         <option value="Books">Books</option>
-        <option value="Home & Kitchen">Home & Kitchen</option>
+        <option value="Home">Home </option>
+        <option value="Kitchen">Kitchen</option>
         <option value="Beauty">Beauty</option>
         <option value="Fitness">Fitness</option>
         <option value="Toys">Toys</option>
