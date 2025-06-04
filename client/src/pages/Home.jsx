@@ -4,14 +4,14 @@ import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
 import HomeHeader from "../components/HomeHeader";
 import logo3 from '../assests/logo3.png';
+import { FaArrowUp } from "react-icons/fa";
 
-// Import icons
+// Category Icons
 import { GiHouse, GiCook, GiLipstick, GiWeightLiftingUp, GiToyMallet } from 'react-icons/gi';
 import { MdDevices } from 'react-icons/md';
 import { FaTshirt } from 'react-icons/fa';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
-
-
+// import Footer from "../components/Footer";
 
 const categories = [
   { name: "Electronics", icon: MdDevices },
@@ -21,22 +21,28 @@ const categories = [
   { name: "Beauty", icon: GiLipstick },
   { name: "Fitness", icon: GiWeightLiftingUp },
   { name: "Toys", icon: GiToyMallet },
-  // { name: "Grocery", icon: GiShoppingCart },
   { name: "Others", icon: BiDotsHorizontalRounded },
 ];
-
-
 
 function Home() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const [showTopButton, setShowTopButton] = useState(false);
   const navigate = useNavigate();
 
+  // Fetch Products
   useEffect(() => {
     axios.get("https://naatudealsofficialsite.onrender.com/api/products").then((res) => {
       const sorted = res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setProducts(sorted);
     });
+
+    // Scroll listener for top button
+    const handleScroll = () => {
+      setShowTopButton(window.scrollY > 200);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const filtered = products.filter((p) =>
@@ -47,19 +53,24 @@ function Home() {
     navigate(`/category/${encodeURIComponent(category)}`);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 p-4 text-gray-900">
+    <div className="min-h-screen bg-gray-100 text-gray-900 pb-10">
       <HomeHeader />
 
-      <div className="flex flex-col items-center">
-        {/* Logo and Telegram Link */}
+      <div className="flex flex-col items-center mt-5">
+
+        {/* Logo & Telegram */}
         <div className="logo-div mb-6">
           <img src={logo3} alt="logo" className="mx-auto w-1/2 mt-5" />
           <div className="header-text text-center mt-0">
             <h4>💥Join Our Telegram Channel💥</h4>
             <h4>👇🏻👇🏻👇🏻</h4>
             <button
-              className="telegram-link inline-flex items-center gap-2 px-4 py-2 mt-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+              className="inline-flex items-center gap-2 px-4 py-2 mt-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
               onClick={() => window.open("https://t.me/NaatuDeals", "_blank")}
             >
               <img
@@ -72,8 +83,8 @@ function Home() {
           </div>
         </div>
 
-         {/* Search Bar */}
-         <div className="sticky top-0 z-50 w-full max-w-md bg-gray-100 p-3 rounded shadow mb-6">
+        {/* Search Bar */}
+        <div className="sticky top-0 z-50 w-full max-w-md bg-gray-100 p-3 shadow rounded mb-6">
           <input
             type="text"
             placeholder="Search products..."
@@ -83,32 +94,41 @@ function Home() {
           />
         </div>
 
-        {/* Circular Categories */}
+        {/* Category Buttons */}
         <div className="w-full max-w-6xl mb-6 flex flex-wrap justify-center gap-6">
           {categories.map(({ name, icon: Icon }) => (
             <button
               key={name}
               onClick={() => handleCategoryClick(name)}
-              className="flex flex-col items-center justify-center cursor-pointer focus:outline-none"
+              className="flex flex-col items-center focus:outline-none"
             >
-              <div className="w-[40px] h-[40px] rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition">
+              <div className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow hover:bg-indigo-700 transition">
                 <Icon size={20} />
               </div>
-              <span className="mt-2 text-sm text-gray-900">{name}</span>
+              <span className="mt-2 text-sm">{name}</span>
             </button>
           ))}
         </div>
 
-       
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full max-w-6xl">
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full max-w-6xl px-2">
           {[...filtered].reverse().map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
-
       </div>
+
+      {/* Scroll to Top Button */}
+      {showTopButton && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow hover:bg-indigo-700 transition"
+        >
+          <FaArrowUp />
+        </button>
+      )}
+
+      {/* <Footer /> */}
     </div>
   );
 }
