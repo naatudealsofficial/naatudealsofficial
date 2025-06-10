@@ -12,7 +12,7 @@ dotenv.config(); // Load .env variables
 const app = express();
 const allowedOrigins = [
   'https://naatudealsofficialweb.onrender.com',
-  'http://localhost:3000' // optional: for local testing
+  'http://localhost:3000' // optional: for local testing code
 ];
 
 app.use(cors({
