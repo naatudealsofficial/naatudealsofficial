@@ -10,7 +10,22 @@ const adminRoutes = require('./routes/admin');
 dotenv.config(); // Load .env variables
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  'https://naatudealsofficialweb.onrender.com',
+  'http://localhost:3000' // optional: for local testing
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URL, {
